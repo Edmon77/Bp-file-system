@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 const project = resolve(process.cwd(), 'tsconfig.json');
 
 /** @type {import("eslint").Linter.Config} */
-export default {
+export const libraryConfig = {
   extends: ['eslint:recommended', 'prettier', 'turbo'],
   plugins: ['only-warn'],
   globals: {

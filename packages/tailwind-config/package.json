@@ -1,0 +1,13 @@
+{
+  "name": "@eeu/tailwind-config",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./postcss": "./postcss.config.mjs"
+  },
+  "devDependencies": {
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2"
+  }
+}
