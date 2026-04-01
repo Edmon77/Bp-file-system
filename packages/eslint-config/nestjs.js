@@ -1,18 +1,13 @@
-// @ts-check
-import eslint from '@eslint/js';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import prettierConfig from '@eeu/eslint-config/prettier-base';
+import { config as baseConfig } from './base.js';
 
-/** @type {import("eslint").Linter.FlatConfig[]} */
-const config = [
-  {
-    ignores: ['eslint.config.mjs'],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  eslintPluginPrettierRecommended,
+/**
+ * A custom ESLint configuration for Nest.js.
+ *
+ * @type {import("eslint").Linter.Config[]}
+ * */
+export const nestJsConfig = [
+  ...baseConfig,
   {
     languageOptions: {
       globals: {
@@ -22,6 +17,7 @@ const config = [
       sourceType: 'commonjs',
       parserOptions: {
         projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   },
@@ -30,9 +26,6 @@ const config = [
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      'prettier/prettier': ['error', prettierConfig],
     },
   },
 ];
-
-export default config;
