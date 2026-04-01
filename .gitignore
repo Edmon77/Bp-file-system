@@ -11,7 +11,8 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
-
+packages/database/.env
+apps/web/.env
 # Testing
 .nyc_output
 blob-report/
@@ -75,3 +76,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # Misc
 .DS_Store
 *.pem
+
+# Database outputs
+packages/database/generated

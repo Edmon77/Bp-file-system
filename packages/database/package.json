@@ -1,0 +1,25 @@
+{
+  "name": "@eeu/database",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate",
+    "format": "prisma format",
+    "lint": "eslint . --fix"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@eeu/eslint-config": "*",
+    "@eeu/typescript-config": "*",
+    "eslint": "^9.39.4",
+    "prisma": "^6.19.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "dotenv": "^16.6.1"
+  }
+}

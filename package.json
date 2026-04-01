@@ -6,6 +6,8 @@
   "description": "",
   "license": "UNLICENSED",
   "scripts": {
+    "db:push": "turbo run db:push",
+    "db:generate": "turbo run db:generate",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "test": "turbo run test",
