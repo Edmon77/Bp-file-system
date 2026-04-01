@@ -11,8 +11,10 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
+    "lint": {},
+    "format": {
+      "cache": false,
+      "outputs": []
     },
     "test": {},
     "test:e2e": {}

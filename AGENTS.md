@@ -14,6 +14,7 @@ npm run build        # Build all packages
 npm run test         # Run tests for all packages
 npm run test:e2e     # Run e2e tests for all packages
 npm run lint         # Lint all packages
+npm run format       # Format all packages with Prettier
 ```
 
 ### App Level (apps/api)
@@ -42,9 +43,8 @@ npx jest src/customers/customers.service.spec.ts       # Single test file
 npx jest --testPathPattern="customers"                  # Tests matching pattern
 npx jest --testNamePattern="should be defined"          # Tests by name
 
-# Linting and Formatting
+# Linting
 npm run lint        # Lint and auto-fix
-npm run format      # Format with Prettier
 ```
 
 ### Running a Single Test
@@ -99,19 +99,19 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 
 **Controllers**:
 - Use decorators for all HTTP methods (`@Get`, `@Post`, `@Patch`, `@Delete`)
-- Use pipes for validation (`ValidationPipe`, `ParseIntPipe`)
-- Use decorators for parameters (`@Param`, `@Body`, `@Query`, `@Query`)
-- Always add JSDoc comments describing the endpoint
+- Use pipes for validation (`ValidationPipe`)
+- Use decorators for parameters (`@Param`, `@Body`, `@Query`)
+- Add comments describing the endpoint (e.g., `// GET /customers/:id`)
 
 ```typescript
 @Controller('customers')
 export class CustomersController {
-    constructor(private readonly customerService: CustomersService) {}
+  constructor(private readonly customerService: CustomersService) {}
 
-    @Get(':id')     // GET /customers/:id
-    retrieveOne(@Param('id') id: string) {
-        return this.customerService.retrieveOne(id);
-    }
+  @Get(':id')     // GET /customers/:id
+  retrieveOne(@Param('id') id: string) {
+    return this.customerService.retrieveOne(id);
+  }
 }
 ```
 
@@ -121,15 +121,20 @@ export class CustomersController {
 - Handle Prisma errors appropriately:
   ```typescript
   try {
-      return await this.databaseService.customer.create({ data: customer });
+    return await this.databaseService.customer.create({ data: customer });
   } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          if (error.code === 'P2002') {
-              throw new ConflictException('customer already exists');
-          }
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        throw new ConflictException('customer already exists');
       }
-      throw error;
+    }
+    throw error;
   }
+  ```
+
+**Top-level promises**: Must be awaited or explicitly marked with `void`:
+  ```typescript
+  void bootstrap();  // Required by lint rule
   ```
 
 **DTOs**:
@@ -141,17 +146,28 @@ export class CustomersController {
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCustomerDto {
-    @IsNotEmpty()
-    @IsString()
-    shelfId: string;
+  @IsNotEmpty()
+  @IsString()
+  shelfId: string;
 }
 ```
 
 ### Formatting (Prettier)
 
-Configuration in `.prettierrc`:
-- `singleQuote: true` - Use single quotes
-- `trailingComma: "all"` - Add trailing commas everywhere
+Prettier config is shared via root `.prettierrc.mjs` which extends from `@eeu/eslint-config/prettier-base`:
+```javascript
+import config from '@eeu/eslint-config/prettier-base';
+export default config;
+```
+
+The base config is defined in `packages/eslint-config/prettier-base.js`:
+```javascript
+const config = {
+  singleQuote: true,
+  trailingComma: 'all',
+};
+export default config;
+```
 
 ```typescript
 // Good
@@ -187,6 +203,11 @@ Key rules:
 - Let unexpected errors propagate
 - Log errors appropriately in services
 - Use `console.error` for errors, `console.log` for debugging
+
+### Comments
+
+- Use `//` for line comments (not `/* */`)
+- Add endpoint comments in controllers (e.g., `// GET /customers/:id`)
 
 ### Prisma
 
