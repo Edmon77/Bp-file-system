@@ -1,0 +1,35 @@
+{
+  "name": "@eeu/jest-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "commonjs",
+  "exports": {
+    ".": {
+      "types": "./src/entry.ts",
+      "default": "./src/entry.ts"
+    },
+    "./base": {
+      "types": "./src/base.ts",
+      "default": "./src/base.ts"
+    },
+    "./nest": {
+      "types": "./src/nest.ts",
+      "default": "./src/nest.ts"
+    }
+  },
+  "main": "./src/entry.ts",
+  "types": "./src/entry.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@eeu/typescript-config": "*",
+    "@jest/types": "^30.0.0",
+    "jest": "^30.0.0",
+    "typescript": "^5.7.3"
+  }
+}
