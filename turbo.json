@@ -22,10 +22,14 @@
     },
     "lint": {},
     "format": {
-      "cache": false,
-      "outputs": []
+      "cache": false
     },
     "test": {},
-    "test:e2e": {}
+    "test:e2e": {},
+    "web#dev": {
+      "with": ["api#dev"],
+      "persistent": true,
+      "cache": false
+    }
   }
 }
